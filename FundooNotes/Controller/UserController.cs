@@ -1,17 +1,47 @@
-using System.Runtime.InteropServices;
+﻿using FundooManager.Interface;
+using FundooModels;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-// In SDK-style projects such as this one, several assembly attributes that were historically
-// defined in this file are now automatically added during build and populated with
-// values defined in project properties. For details of which attributes are included
-// and how to customise this process see: https://aka.ms/assembly-info-properties
+namespace FundooNotes.Controller
+{
+    public class UserController : ControllerBase
+    {
+        private readonly IUserManager manager;
 
+        public UserController(IUserManager manager)
+        {
+            this.manager = manager;
+        }
+        [HttpPost]
+        [Route("api/register")]
+        public IActionResult Register([FromBody] RegisterModel userData)
+        {
+            try
+            {
+                string result = this.manager.Register(userData);
 
-// Setting ComVisible to false makes the types in this assembly not visible to COM
-// components.  If you need to access a type in this assembly from COM, set the ComVisible
-// attribute to true on that type.
+                if (result.Equals("Registration Successfull"))
+                {
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
+                }
+                else
+                {
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = result });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
+        }
 
-[assembly: ComVisible(false)]
-
-// The following GUID is for the ID of the typelib if this project is exposed to COM.
-
-[assembly: Guid("899fb819-ec10-4d25-9503-63af8bd81a17")]
+        private IActionResult Ok<T>(ResponseModel<T> responseModel)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
