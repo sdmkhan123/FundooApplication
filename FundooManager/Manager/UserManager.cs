@@ -27,11 +27,11 @@ namespace FundooManager.Interface
             }
         }
 
-        public string Login(LoginModel login)
+        public string LogIn(LoginModel login)
         {
             try
             {
-                return this.repository.Login(login);
+                return this.repository.LogIn(login);
             }
             catch (Exception e)
             {
