@@ -43,5 +43,25 @@ namespace FundooRepository.Interface
                 throw new Exception(e.Message);
             }
         }
+        public string LogIn(LoginModel logIn)//here class is used as datatype and its parameter
+        {
+            try
+            {
+                var validEmail = this.userContext.Login.Where(x => x.Email == logIn.Email).FirstOrDefault();
+                var validPassword = this.userContext.Login.Where(x => x.Password == logIn.Password).FirstOrDefault();
+                if (validEmail == null && validPassword == null)
+                {
+                    return "Login UnSuccessful";
+                }
+                else
+                {
+                    return "Login Successful ";
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
