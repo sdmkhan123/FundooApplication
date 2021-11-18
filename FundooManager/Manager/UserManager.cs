@@ -1,4 +1,5 @@
 ﻿using FundooModels;
+using FundooRepository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,22 +9,33 @@ namespace FundooManager.Interface
     public class UserManager : IUserManager
     {
         //Declaring obj for the IUserRepository
-        private readonly IUserManager manager;
-
-        public UserManager(IUserManager manager)
+        private readonly IUserRepository repository;
+        public UserManager(IUserRepository repository)
         {
-            this.manager = manager;
+            this.repository = repository;
         }
-        //register pass the user data to the repository
+
         public string Register(RegisterModel userData)
         {
             try
             {
-                return this.manager.Register(userData);
+                return this.repository.Register(userData);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                throw new Exception(ex.Message);
+                throw new Exception(e.Message);
+            }
+        }
+
+        public string Login(LoginModel login)
+        {
+            try
+            {
+                return this.repository.Login(login);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
             }
         }
     }
