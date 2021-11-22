@@ -1,2 +1,2 @@
 create database FundooNotes
-use FundooNotes
+use Fundoodb
