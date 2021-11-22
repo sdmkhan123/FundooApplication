@@ -24,7 +24,7 @@ namespace FundooNotes.Controller
             {
                 string result = this.manager.Register(userData);
 
-                if (result.Equals("Registration Successfull"))
+                if (result.Equals("Registration Successful"))
                 {
                     return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
                 }
@@ -37,11 +37,6 @@ namespace FundooNotes.Controller
             {
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
-        }
-
-        private IActionResult Ok<T>(ResponseModel<T> responseModel)
-        {
-            throw new NotImplementedException();
         }
 
         [HttpPost]
