@@ -16,7 +16,7 @@ namespace FundooModels
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-        [Required]
+        [Key]
         public int UserID { get; set; }
     }
 }
