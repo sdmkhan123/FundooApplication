@@ -13,6 +13,5 @@ namespace FundooRepository.Context
 
         }
         public DbSet<RegisterModel> Users { get; set; }
-        public DbSet<LoginModel> Login { get; set; } //represent login credential- email id and passward
     }
 }
