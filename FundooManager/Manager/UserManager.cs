@@ -38,5 +38,16 @@ namespace FundooManager.Interface
                 throw new Exception(e.Message);
             }
         }
+        public string ResetPassword(ResetPasswordModel userData)
+        {
+            try
+            {
+                return this.repository.ResetPassword(userData);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

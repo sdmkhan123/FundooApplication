@@ -63,5 +63,25 @@ namespace FundooRepository.Interface
                 throw new Exception(ex.Message);
             }
         }
+        public string ResetPassword(ResetPasswordModel userData)
+        {
+            try
+            {
+                var validEmailId = this.userContext.Users.Where(x => x.Email == userData.Email).FirstOrDefault();
+                if (validEmailId != null)
+                {
+                    //validEmailId.Password = EncryptPassword(userData.NewPassword);
+                    this.userContext.Update(validEmailId);
+                    this.userContext.SaveChanges();
+                    return "Password is updated";
+                }
+
+                return "Password is not updated, Kindly register yourself first";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

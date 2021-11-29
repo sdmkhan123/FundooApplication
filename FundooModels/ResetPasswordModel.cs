@@ -5,11 +5,12 @@ using System.Text;
 
 namespace FundooModels
 {
-    public class LoginModel
+    public class ResetPasswordModel
     {
+        public string Password;
         [Required]
         public string Email { get; set; }
         [Required]
-        public string Password { get; set; }
+        public string NewPassword { get; set; }
     }
 }
