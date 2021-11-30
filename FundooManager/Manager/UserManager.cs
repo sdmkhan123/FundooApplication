@@ -14,7 +14,6 @@ namespace FundooManager.Interface
         {
             this.repository = repository;
         }
-
         public string Register(RegisterModel registerModel)
         {
             try
