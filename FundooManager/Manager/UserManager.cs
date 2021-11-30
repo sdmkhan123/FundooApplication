@@ -15,34 +15,44 @@ namespace FundooManager.Interface
             this.repository = repository;
         }
 
-        public string Register(RegisterModel userData)
+        public string Register(RegisterModel registerModel)
         {
             try
             {
-                return this.repository.Register(userData);
+                return this.repository.Register(registerModel);
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-
-        public string LogIn(LoginModel login)
+        public string LogIn(LoginModel loginModel)
         {
             try
             {
-                return this.repository.LogIn(login);
+                return this.repository.LogIn(loginModel);
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public string ResetPassword(ResetPasswordModel userData)
+        public string ResetPassword(ResetPasswordModel resetPasswordModel)
         {
             try
             {
-                return this.repository.ResetPassword(userData);
+                return this.repository.ResetPassword(resetPasswordModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public string ForgotPassword(string emailId)
+        {
+            try
+            {
+                return this.repository.ForgotPassword(emailId);
             }
             catch (Exception ex)
             {

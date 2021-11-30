@@ -16,20 +16,17 @@ namespace FundooRepository.Interface
             this.Configuration = configuration;
             this.userContext = userContext;
         }
-
         public IConfiguration Configuration { get; }
-        public string Register(RegisterModel userData)
+        public string Register(RegisterModel registerModel)
         {
             try
             {
-                var validEmail = this.userContext.Users.Where(x => x.Email == userData.Email).FirstOrDefault();
+                var validEmail = this.userContext.Users.Where(x => x.Email == registerModel.Email).FirstOrDefault();
                 if (validEmail == null)
                 {
-                    if (userData != null)
+                    if (registerModel != null)
                     {
-                        //Add  the data to Data Base using User Context
-                        this.userContext.Add(userData);
-                        //Save the change in the Data Base
+                        this.userContext.Add(registerModel);
                         this.userContext.SaveChanges();
                         return "Registration Successful!";
                     }
@@ -43,12 +40,12 @@ namespace FundooRepository.Interface
                 throw new Exception(e.Message);
             }
         }
-        public string LogIn(LoginModel logIn)//here class is used as datatype and its parameter
+        public string LogIn(LoginModel loginModel)
         {
             try
             {
-                var validEmail = this.userContext.Users.Where(x => x.Email == logIn.Email).FirstOrDefault();
-                var validPassword = this.userContext.Users.Where(x => x.Password == logIn.Password).FirstOrDefault();
+                var validEmail = this.userContext.Users.Where(x => x.Email == loginModel.Email).FirstOrDefault();
+                var validPassword = this.userContext.Users.Where(x => x.Password == loginModel.Password).FirstOrDefault();
                 if (validEmail == null && validPassword == null)
                 {
                     return "Login UnSuccessful";
@@ -63,25 +60,33 @@ namespace FundooRepository.Interface
                 throw new Exception(ex.Message);
             }
         }
-        public string ResetPassword(ResetPasswordModel userData)
+        public string EncryptPassword(string password)
+        {
+            var encodedPassword = Encoding.UTF8.GetBytes(password);
+            return Convert.ToBase64String(encodedPassword);
+        }
+        public string ResetPassword(ResetPasswordModel resetPasswordModel)
         {
             try
             {
-                var validEmailId = this.userContext.Users.Where(x => x.Email == userData.Email).FirstOrDefault();
+                var validEmailId = this.userContext.Users.Where(x => x.Email == resetPasswordModel.Email).FirstOrDefault();
                 if (validEmailId != null)
                 {
-                    //validEmailId.Password = EncryptPassword(userData.NewPassword);
+                    validEmailId.Password = EncryptPassword(resetPasswordModel.NewPassword);
                     this.userContext.Update(validEmailId);
                     this.userContext.SaveChanges();
                     return "Password is updated";
                 }
-
-                return "Password is not updated, Kindly register yourself first";
+                return "Password is not updated";
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
+        }
+        public string ForgotPassword(string emailId)
+        {
+            return "";
         }
     }
 }
