@@ -28,6 +28,7 @@ namespace FundooRepository.Interface
                 {
                     if (registerModel != null)
                     {
+                        registerModel.Password = this.EncryptPassword(registerModel.Password);
                         this.userContext.Add(registerModel);
                         this.userContext.SaveChanges();
                         return "Registration Successful!";
