@@ -79,5 +79,26 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+        [HttpPut]
+        [Route("api/addreminder")]
+        public IActionResult AddRemindMe(int notesId, string remindMeNotes)
+        {
+            try
+            {
+                string result = this.notesManager.AddRemindMe(notesId, remindMeNotes);
+                if (result.Equals("Reminder added successfully"))
+                {
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
+                }
+                else
+                {
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = result });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
+        }
     }
 }

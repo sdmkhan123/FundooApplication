@@ -87,5 +87,27 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public string AddRemindMe(int notesId, string remindMeNotes)
+        {
+            try
+            {
+                var validNoteId = this.userContext.Notes.Where(x => x.NoteId == notesId).SingleOrDefault();
+                if (validNoteId != null)
+                {
+                    validNoteId.RemindeMe = remindMeNotes;
+                    this.userContext.Notes.Update(validNoteId);
+                    this.userContext.SaveChanges();
+                    return "Reminder added successfully";
+                }
+                else
+                {
+                    return "This note does not exist. Kindly create a new one.";
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
