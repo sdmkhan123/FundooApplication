@@ -7,5 +7,6 @@ namespace FundooManager.Interface
         string AddANote(NotesModel notesModel);
         string EditANote(NotesModel notesModel);
         string ChangeAColor(int noteId, string noteColor);
+        string AddRemindMe(int notesId, string remindMeNotes);
     }
 }
