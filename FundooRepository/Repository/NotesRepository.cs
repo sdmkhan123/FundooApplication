@@ -68,5 +68,24 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public string ChangeAColor(int noteId, string noteColor)
+        {
+            try
+            {
+                var validNote = this.userContext.Notes.Where(x => x.NoteId == noteId).FirstOrDefault();
+                if (validNote != null)
+                {
+                    validNote.ChangeColor = noteColor;
+                    this.userContext.Notes.Update(validNote);
+                    this.userContext.SaveChanges();
+                    return "Color is changed successfully";
+                }
+                return "Color update is unsuccessful";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

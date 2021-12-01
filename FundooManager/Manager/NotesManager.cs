@@ -36,5 +36,16 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
+        public string ChangeAColor(int noteId, string noteColor)
+        {
+            try
+            {
+                return this.notesRepository.ChangeAColor(noteId, noteColor);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

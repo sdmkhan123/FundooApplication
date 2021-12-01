@@ -58,5 +58,26 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+        [HttpPut]
+        [Route("api/changecolor")]
+        public IActionResult ChangeAColor(int noteId, string noteColor)
+        {
+            try
+            {
+                string result = this.notesManager.ChangeAColor(noteId, noteColor);
+                if (result.Equals("Color is changed successfully"))
+                {
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
+                }
+                else
+                {
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = result });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
+        }
     }
 }
