@@ -24,7 +24,7 @@ namespace FundooNotes.Controller
             {
                 string result = this.manager.Register(registerModel);
 
-                if (result.Equals("Registration Successful"))
+                if (result.Equals("Registration Successful!"))
                 {
                     return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
                 }
