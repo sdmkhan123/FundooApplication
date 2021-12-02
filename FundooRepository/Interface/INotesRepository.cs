@@ -12,5 +12,6 @@ namespace FundooRepository.Interface
         string AddRemindMe(int notesId, string remindMeNotes);
         string DeleteRemindMe(int notesId);
         string DeleteANote(int notesId);
+        string RestoreFromTrash(int notesId);
     }
 }
