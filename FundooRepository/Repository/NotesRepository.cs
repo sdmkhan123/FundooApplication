@@ -157,5 +157,27 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public string RestoreFromTrash(int notesId)
+        {
+            try
+            {
+                var validNoteId = this.userContext.Notes.Where(x => x.NoteId == notesId).FirstOrDefault();
+                if (validNoteId != null)
+                {
+                    validNoteId.Trash = false;
+                    this.userContext.Notes.Update(validNoteId);
+                    this.userContext.SaveChangesAsync();
+                    return "Note restored from Trash successfully";
+                }
+                else
+                {
+                    return "This note does not exist in Trash";
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

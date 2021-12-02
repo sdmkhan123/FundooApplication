@@ -80,5 +80,16 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
+        public string RestoreFromTrash(int notesId)
+        {
+            try
+            {
+                return this.notesRepository.RestoreFromTrash(notesId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
