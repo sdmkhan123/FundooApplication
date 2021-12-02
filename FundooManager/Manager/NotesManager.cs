@@ -124,5 +124,16 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
+        public string Pin(int notesId)
+        {
+            try
+            {
+                return this.notesRepository.Pin(notesId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -16,5 +16,6 @@ namespace FundooRepository.Interface
         string DeleteNoteForever(int notesId);
         string Archive(int noteId);
         string UnArchive(int noteId);
+        string Pin(int notesId);
     }
 }

@@ -252,5 +252,37 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public string Pin(int notesId)
+        {
+            try
+            {
+                var valiNoteId = this.userContext.Notes.Where(x => x.NoteId == notesId).FirstOrDefault();
+                if (valiNoteId != null && valiNoteId.Trash != true)
+                {
+                    valiNoteId.PinNote = true;
+                    if (valiNoteId.Archive == true)
+                    {
+                        valiNoteId.Archive = false;
+                        this.userContext.Notes.Update(valiNoteId);
+                        this.userContext.SaveChanges();
+                        return "Note unarchived and pinned successfully";
+                    }
+                    else
+                    {
+                        this.userContext.Notes.Update(valiNoteId);
+                        this.userContext.SaveChanges();
+                        return "Note pinned successfully";
+                    }
+                }
+                else
+                {
+                    return "This note does not exist";
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
