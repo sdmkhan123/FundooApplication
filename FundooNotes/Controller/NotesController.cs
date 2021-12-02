@@ -17,7 +17,7 @@ namespace FundooNotes.Controller
             this.notesManager = notesManager;
         }
         [HttpPost]
-        [Route("api/addnote")]
+        [Route("api/addanote")]
         public IActionResult AddANote([FromBody] NotesModel notesModel)
         {
             try
@@ -38,7 +38,7 @@ namespace FundooNotes.Controller
             }
         }
         [HttpPut]
-        [Route("api/editnote")]
+        [Route("api/editanote")]
         public IActionResult EditANote([FromBody] NotesModel notesModel)
         {
             try
@@ -59,7 +59,7 @@ namespace FundooNotes.Controller
             }
         }
         [HttpPut]
-        [Route("api/changecolor")]
+        [Route("api/changeacolor")]
         public IActionResult ChangeAColor(int noteId, string noteColor)
         {
             try
@@ -80,13 +80,34 @@ namespace FundooNotes.Controller
             }
         }
         [HttpPut]
-        [Route("api/addreminder")]
+        [Route("api/addremindme")]
         public IActionResult AddRemindMe(int notesId, string remindMeNotes)
         {
             try
             {
                 string result = this.notesManager.AddRemindMe(notesId, remindMeNotes);
                 if (result.Equals("Reminder added successfully"))
+                {
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
+                }
+                else
+                {
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = result });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
+        }
+        [HttpPut]
+        [Route("api/deletermideme")]
+        public IActionResult DeleteRemindMe(int notesId)
+        {
+            try
+            {
+                string result = this.notesManager.DeleteRemindMe(notesId);
+                if (result.Equals("Reminder deleted successfully"))
                 {
                     return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
                 }
