@@ -102,5 +102,16 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
+        public string Archive(int noteId)
+        {
+            try
+            {
+                return this.notesRepository.Archive(noteId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

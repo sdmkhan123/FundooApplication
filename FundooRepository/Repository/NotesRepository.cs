@@ -136,6 +136,7 @@ namespace FundooRepository.Repository
                 if (validNoteId != null)
                 {
                     validNoteId.Trash = true;
+                    validNoteId.Archive = false;
                     if (validNoteId.PinNote == true)
                     {
                         validNoteId.PinNote = false;
@@ -196,6 +197,35 @@ namespace FundooRepository.Repository
                 }
             }
             catch (ArgumentNullException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public string Archive(int noteId)
+        {
+            try
+            {
+                var validNote = this.userContext.Notes.Where(x => x.NoteId == noteId).SingleOrDefault();
+                if (validNote != null && validNote.Trash != true)
+                {
+                    validNote.Archive = true;
+                    if (validNote.PinNote == true)
+                    {
+                        validNote.PinNote = false;
+                        this.userContext.Notes.Update(validNote);
+                        this.userContext.SaveChanges();
+                        return "Note is unpinned and archived successfully";
+                    }
+                    this.userContext.Notes.Update(validNote);
+                    this.userContext.SaveChanges();
+                    return "Note is archived successfully";
+                }
+                else
+                {
+                    return "This note does not exist";
+                }
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
