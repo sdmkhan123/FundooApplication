@@ -163,5 +163,26 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+        [HttpDelete]
+        [Route("api/deletenoteforever")]
+        public IActionResult DeleteNoteForever(int notesId)
+        {
+            try
+            {
+                string result = this.notesManager.DeleteNoteForever(notesId);
+                if (result.Equals("This note is deleted forever"))
+                {
+                    return this.BadRequest(new ResponseModel<string>() { Status = true, Message = result });
+                }
+                else
+                {
+                    return this.Ok(new ResponseModel<string>() { Status = false, Message = result });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
+        }
     }
 }

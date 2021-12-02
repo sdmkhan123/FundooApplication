@@ -179,5 +179,26 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public string DeleteNoteForever(int notesId)
+        {
+            try
+            {
+                var validNoteId = this.userContext.Notes.Where(x => x.NoteId == notesId).FirstOrDefault();
+                if (validNoteId != null)
+                {
+                    this.userContext.Notes.Remove(validNoteId);
+                    this.userContext.SaveChanges();
+                    return "This note is deleted forever";
+                }
+                else
+                {
+                    return "This note does not exist in Trash.";
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
