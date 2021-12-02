@@ -128,5 +128,34 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public string DeleteANote(int notesId)
+        {
+            try
+            {
+                var validNoteId = this.userContext.Notes.Where(x => x.NoteId == notesId).FirstOrDefault();
+                if (validNoteId != null)
+                {
+                    validNoteId.Trash = true;
+                    if (validNoteId.PinNote == true)
+                    {
+                        validNoteId.PinNote = false;
+                        this.userContext.Notes.Update(validNoteId);
+                        this.userContext.SaveChanges();
+                        return "Note unpinned and trashed sucessfully";
+                    }
+                    this.userContext.Notes.Update(validNoteId);
+                    this.userContext.SaveChanges();
+                    return "Note trashed successfully";
+                }
+                else
+                {
+                    return "This note does not exist. Kindly create a new one";
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -121,5 +121,26 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+        [HttpPut]
+        [Route("api/deleteanote")]
+        public IActionResult DeleteANote(int notesId)
+        {
+            try
+            {
+                string result = this.notesManager.DeleteANote(notesId);
+                if (result.Equals("This note does not exist. Kindly create a new one"))
+                {
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = result });
+                }
+                else
+                {
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
+        }
     }
 }

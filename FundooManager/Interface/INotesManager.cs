@@ -9,5 +9,6 @@ namespace FundooManager.Interface
         string ChangeAColor(int noteId, string noteColor);
         string AddRemindMe(int notesId, string remindMeNotes);
         string DeleteRemindMe(int notesId);
+        string DeleteANote(int notesId);
     }
 }
