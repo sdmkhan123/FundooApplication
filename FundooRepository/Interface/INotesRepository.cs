@@ -14,5 +14,6 @@ namespace FundooRepository.Interface
         string DeleteANote(int notesId);
         string RestoreFromTrash(int notesId);
         string DeleteNoteForever(int notesId);
+        string Archive(int noteId);
     }
 }
