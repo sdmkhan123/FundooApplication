@@ -135,5 +135,16 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
+        public string UnPin(int noteId)
+        {
+            try
+            {
+                return this.notesRepository.UnPin(noteId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

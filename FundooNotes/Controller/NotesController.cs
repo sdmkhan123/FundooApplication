@@ -247,5 +247,26 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+        [HttpPut]
+        [Route("api/unpin")]
+        public IActionResult UnPin(int noteId)
+        {
+            try
+            {
+                string result = this.notesManager.UnPin(noteId);
+                if (result.Equals("Note is UnPin successfully"))
+                {
+                    return this.BadRequest(new ResponseModel<string>() { Status = true, Message = result });
+                }
+                else
+                {
+                    return this.Ok(new ResponseModel<string>() { Status = false, Message = result });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
+        }
     }
 }

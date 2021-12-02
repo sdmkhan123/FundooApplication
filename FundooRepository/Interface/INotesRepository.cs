@@ -17,5 +17,6 @@ namespace FundooRepository.Interface
         string Archive(int noteId);
         string UnArchive(int noteId);
         string Pin(int notesId);
+        string UnPin(int noteId);
     }
 }

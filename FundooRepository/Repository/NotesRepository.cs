@@ -284,5 +284,27 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public string UnPin(int notesId)
+        {
+            try
+            {
+                var validNote = this.userContext.Notes.Where(x => x.NoteId == notesId).SingleOrDefault();
+                if (validNote != null && validNote.PinNote != false)
+                {
+                    validNote.PinNote = false;
+                    this.userContext.Notes.Update(validNote);
+                    this.userContext.SaveChangesAsync();
+                    return "Note is UnPin successfully";
+                }
+                else
+                {
+                    return "This note does not exist";
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
