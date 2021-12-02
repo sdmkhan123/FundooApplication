@@ -58,5 +58,16 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
+        public string DeleteRemindMe(int notesId)
+        {
+            try
+            {
+                return this.notesRepository.DeleteRemindMe(notesId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
