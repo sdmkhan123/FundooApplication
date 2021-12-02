@@ -13,5 +13,6 @@ namespace FundooManager.Interface
         string RestoreFromTrash(int notesId);
         string DeleteNoteForever(int notesId);
         string Archive(int noteId);
+        string UnArchive(int noteId);
     }
 }

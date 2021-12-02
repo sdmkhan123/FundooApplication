@@ -230,5 +230,27 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public string UnArchive(int noteId)
+        {
+            try
+            {
+                var validNote = this.userContext.Notes.Where(x => x.NoteId == noteId).SingleOrDefault();
+                if (validNote != null && validNote.Archive != false)
+                {
+                    validNote.Archive = false;
+                    this.userContext.Notes.Update(validNote);
+                    this.userContext.SaveChangesAsync();
+                    return "Note is UnArchive successfully";
+                }
+                else
+                {
+                    return "This note does not exist in Archive";
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

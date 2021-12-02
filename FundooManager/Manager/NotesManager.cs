@@ -113,5 +113,16 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
+        public string UnArchive(int noteId)
+        {
+            try
+            {
+                return this.notesRepository.UnArchive(noteId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
