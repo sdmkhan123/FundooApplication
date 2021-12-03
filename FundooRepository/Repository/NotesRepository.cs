@@ -318,6 +318,23 @@ namespace FundooRepository.Repository
                 }
                 return null;
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public IEnumerable<NotesModel> GetAllReminderNotes(int userId)
+        {
+            try
+            {
+                IEnumerable<NotesModel> validReminder = 
+                    this.userContext.Notes.Where(x => x.UserId == userId && x.RemindeMe != null);
+                if (validReminder != null)
+                {
+                    return validReminder;
+                }
+                return null;
+            }
             catch (ArgumentNullException ex)
             {
                 throw new Exception(ex.Message);

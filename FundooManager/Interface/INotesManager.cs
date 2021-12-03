@@ -18,5 +18,6 @@ namespace FundooManager.Interface
         string Pin(int notesId);
         string UnPin(int noteId);
         IEnumerable<NotesModel> GetAllArchiveNotes(int userId);
+        IEnumerable<NotesModel> GetAllReminderNotes(int userId);
     }
 }
