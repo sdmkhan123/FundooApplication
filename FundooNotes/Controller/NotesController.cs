@@ -268,5 +268,30 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
+        [HttpGet]
+        [Route("api/getallarchievednotes")]
+        public IActionResult GetAllArchiveNotes(int userId)
+        {
+            try
+            {
+                IEnumerable<NotesModel> result = this.notesManager.GetAllArchiveNotes(userId);
+
+                if (result.Equals(null))
+                {
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = 
+                        "There are no Archive notes to be Get" });
+                }
+                else
+                {
+                    return this.Ok(new ResponseModel<IEnumerable<NotesModel>>() { Status = true, Message = 
+                        "Get Archive Notes successfully", Data = result });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new ResponseModel<string> { Status = false, Message = ex.Message });
+            }
+        }
     }
 }

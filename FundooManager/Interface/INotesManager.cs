@@ -1,4 +1,5 @@
 ﻿using FundooModels;
+using System.Collections.Generic;
 
 namespace FundooManager.Interface
 {
@@ -16,5 +17,6 @@ namespace FundooManager.Interface
         string UnArchive(int noteId);
         string Pin(int notesId);
         string UnPin(int noteId);
+        IEnumerable<NotesModel> GetAllArchiveNotes(int userId);
     }
 }

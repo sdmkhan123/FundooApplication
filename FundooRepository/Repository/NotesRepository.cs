@@ -306,5 +306,22 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public IEnumerable<NotesModel> GetAllArchiveNotes(int userId)
+        {
+            try
+            {
+                IEnumerable<NotesModel> validUserId = 
+                    this.userContext.Notes.Where(x => x.UserId == userId && x.Archive == true);
+                if (validUserId != null)
+                {
+                    return validUserId;
+                }
+                return null;
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
