@@ -168,5 +168,16 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
+        public IEnumerable<NotesModel> GetAllTrashNotes(int userId)
+        {
+            try
+            {
+                return this.notesRepository.GetAllTrashNotes(userId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -335,7 +335,24 @@ namespace FundooRepository.Repository
                 }
                 return null;
             }
-            catch (ArgumentNullException ex)
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public IEnumerable<NotesModel> GetAllTrashNotes(int userId)
+        {
+            try
+            {
+                IEnumerable<NotesModel> validTrashedNotes = 
+                    this.userContext.Notes.Where(x => (x.UserId == userId && x.Trash == true));
+                if (validTrashedNotes != null)
+                {
+                    return validTrashedNotes;
+                }
+                return null;
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

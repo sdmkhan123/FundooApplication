@@ -21,5 +21,6 @@ namespace FundooRepository.Interface
         string UnPin(int noteId);
         IEnumerable<NotesModel> GetAllArchiveNotes(int userId);
         IEnumerable<NotesModel> GetAllReminderNotes(int userId);
+        IEnumerable<NotesModel> GetAllTrashNotes(int userId);
     }
 }
