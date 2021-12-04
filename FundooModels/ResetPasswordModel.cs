@@ -7,7 +7,6 @@ namespace FundooModels
 {
     public class ResetPasswordModel
     {
-        public string Password;
         [Required]
         public string Email { get; set; }
         [Required]
