@@ -28,6 +28,7 @@ namespace FundooRepository.Interface
                 {
                     if (registerModel != null)
                     {
+                        registerModel.Password = this.EncryptPassword(registerModel.Password);
                         this.userContext.Add(registerModel);
                         this.userContext.SaveChanges();
                         return "Registration Successful!";
@@ -48,9 +49,18 @@ namespace FundooRepository.Interface
             {
                 var validEmail = this.userContext.Users.Where(x => x.Email == loginModel.Email).FirstOrDefault();
                 var validPassword = this.userContext.Users.Where(x => x.Password == loginModel.Password).FirstOrDefault();
+                validPassword.Password = EncryptPassword(loginModel.Password);
                 if (validEmail == null && validPassword == null)
                 {
                     return "Login UnSuccessful";
+                }
+                else if(validEmail == null)
+                {
+                    return "Given email is incorrect";
+                }
+                else if(validPassword == null)
+                {
+                    return "Enter password is incorrect";
                 }
                 else
                 {
