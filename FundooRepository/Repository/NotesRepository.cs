@@ -132,6 +132,7 @@ namespace FundooRepository.Repository
         {
             try
             {
+                string showMessage;
                 var validNoteId = this.userContext.Notes.Where(x => x.NoteId == notesId).FirstOrDefault();
                 if (validNoteId != null)
                 {
@@ -140,18 +141,17 @@ namespace FundooRepository.Repository
                     if (validNoteId.PinNote == true)
                     {
                         validNoteId.PinNote = false;
-                        this.userContext.Notes.Update(validNoteId);
-                        this.userContext.SaveChanges();
-                        return "Note unpinned and trashed sucessfully";
+                        showMessage = "Note unpinned and trashed sucessfully";
                     }
-                    this.userContext.Notes.Update(validNoteId);
-                    this.userContext.SaveChanges();
-                    return "Note trashed successfully";
+                    showMessage = "Note trashed successfully";
                 }
                 else
                 {
-                    return "This note does not exist. Kindly create a new one";
+                    showMessage = "This note does not exist. Kindly create a new one";
                 }
+                this.userContext.Notes.Update(validNoteId);
+                this.userContext.SaveChanges();
+                return showMessage;
             }
             catch (Exception ex)
             {
@@ -205,6 +205,7 @@ namespace FundooRepository.Repository
         {
             try
             {
+                string showMessage;
                 var validNote = this.userContext.Notes.Where(x => x.NoteId == noteId).SingleOrDefault();
                 if (validNote != null && validNote.Trash != true)
                 {
@@ -212,18 +213,17 @@ namespace FundooRepository.Repository
                     if (validNote.PinNote == true)
                     {
                         validNote.PinNote = false;
-                        this.userContext.Notes.Update(validNote);
-                        this.userContext.SaveChanges();
-                        return "Note is unpinned and archived successfully";
+                        showMessage = "Note is unpinned and archived successfully";
                     }
-                    this.userContext.Notes.Update(validNote);
-                    this.userContext.SaveChanges();
-                    return "Note is archived successfully";
+                    showMessage = "Note is archived successfully";
                 }
                 else
                 {
-                    return "This note does not exist";
+                    showMessage = "This note does not exist";
                 }
+                this.userContext.Notes.Update(validNote);
+                this.userContext.SaveChanges();
+                return showMessage;
             }
             catch (Exception ex)
             {
@@ -256,6 +256,7 @@ namespace FundooRepository.Repository
         {
             try
             {
+                string showMessage;
                 var valiNoteId = this.userContext.Notes.Where(x => x.NoteId == notesId).FirstOrDefault();
                 if (valiNoteId != null && valiNoteId.Trash != true)
                 {
@@ -263,21 +264,20 @@ namespace FundooRepository.Repository
                     if (valiNoteId.Archive == true)
                     {
                         valiNoteId.Archive = false;
-                        this.userContext.Notes.Update(valiNoteId);
-                        this.userContext.SaveChanges();
-                        return "Note unarchived and pinned successfully";
+                        showMessage = "Note unarchived and pinned successfully";
                     }
                     else
                     {
-                        this.userContext.Notes.Update(valiNoteId);
-                        this.userContext.SaveChanges();
-                        return "Note pinned successfully";
+                        showMessage = "Note pinned successfully";
                     }
                 }
                 else
                 {
-                    return "This note does not exist";
+                    showMessage = "This note does not exist";
                 }
+                this.userContext.Notes.Update(valiNoteId);
+                this.userContext.SaveChanges();
+                return showMessage;
             }
             catch (Exception ex)
             {
@@ -357,7 +357,6 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
-
         public IEnumerable<NotesModel> GetAllNotes(int userId)
         {
             try
