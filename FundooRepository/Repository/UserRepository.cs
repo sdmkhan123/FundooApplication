@@ -53,6 +53,14 @@ namespace FundooRepository.Interface
                 {
                     return "Login UnSuccessful";
                 }
+                else if(validEmail == null)
+                {
+                    return "Given email is incorrect";
+                }
+                else if(validPassword == null)
+                {
+                    return "Enter password is incorrect";
+                }
                 else
                 {
                     return "Login Successful ";
