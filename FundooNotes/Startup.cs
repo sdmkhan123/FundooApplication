@@ -2,11 +2,8 @@ using FundooManager.Interface;
 using FundooManager.Manager;
 using FundooRepository.Context;
 using FundooRepository.Interface;
-<<<<<<< HEAD
 using FundooRepository.Repository;
-=======
 using Microsoft.AspNetCore.Authentication.JwtBearer;
->>>>>>> UserRegistration
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,18 +36,14 @@ namespace FundooNotes
             services.AddDbContextPool<UserContext>(option => option.UseSqlServer(this.Configuration.GetConnectionString("FundooDB")));
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserManager, UserManager>();
-<<<<<<< HEAD
             services.AddTransient<INotesRepository, NotesRepository>();
             services.AddTransient<INotesManager, NotesManager>();
-=======
             services.AddCors(options => options.AddPolicy("AllowAllHeaders", builder =>
             {
                 builder.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader();
             }));
-
->>>>>>> UserRegistration
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1.0", new OpenApiInfo { Title = "My Demo Api", Version = "1.0" });

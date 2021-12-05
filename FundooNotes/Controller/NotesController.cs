@@ -1,5 +1,6 @@
 ﻿using FundooManager.Interface;
 using FundooModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace FundooNotes.Controller
 {
+    //[Authorize]
     public class NotesController : ControllerBase
     {
         private readonly INotesManager notesManager;
@@ -388,10 +390,5 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string> { Status = false, Message = ex.Message });
             }
         }
-<<<<<<< HEAD
     }
 }
-=======
-    }*/
-}
->>>>>>> UserRegistration
