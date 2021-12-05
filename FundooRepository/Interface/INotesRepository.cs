@@ -1,4 +1,5 @@
 ﻿using FundooModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
@@ -23,5 +24,6 @@ namespace FundooRepository.Interface
         IEnumerable<NotesModel> GetAllReminderNotes(int userId);
         IEnumerable<NotesModel> GetAllTrashNotes(int userId);
         IEnumerable<NotesModel> GetAllNotes(int userId);
+        string AddImage(int noteId, IFormFile imagePath);
     }
 }

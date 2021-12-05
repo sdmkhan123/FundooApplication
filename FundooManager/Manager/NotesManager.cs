@@ -1,6 +1,7 @@
 ﻿using FundooManager.Interface;
 using FundooModels;
 using FundooRepository.Interface;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,6 +42,17 @@ namespace FundooManager.Manager
             try
             {
                 return this.notesRepository.ChangeAColor(noteId, noteColor);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public string AddImage(int noteId, IFormFile imagePath)
+        {
+            try
+            {
+                return this.notesRepository.AddImage(noteId, imagePath);
             }
             catch (Exception ex)
             {
@@ -179,7 +191,6 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
-
         public IEnumerable<NotesModel> GetAllNotes(int userId)
         {
             try

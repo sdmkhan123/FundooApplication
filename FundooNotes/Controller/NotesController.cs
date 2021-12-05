@@ -1,5 +1,6 @@
 ﻿using FundooManager.Interface;
 using FundooModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,29 @@ namespace FundooNotes.Controller
             catch (Exception ex)
             {
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
+        }
+        [HttpPut]
+        [Route("api/addimage")]
+        public IActionResult AddImage(int noteId, IFormFile imagePath)
+        {
+            try
+            {
+                string result = this.notesManager.AddImage(noteId, imagePath);
+                if (result.Equals("Image Added successfully"))
+                {
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
+                }
+                else
+                {
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = result });
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new ResponseModel<string>() { Status = true, Message = ex.Message });
             }
         }
         [HttpPut]
@@ -268,7 +292,6 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
-
         [HttpGet]
         [Route("api/getallarchievednotes")]
         public IActionResult GetAllArchiveNotes(int userId)
@@ -341,7 +364,6 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string> { Status = false, Message = ex.Message });
             }
         }
-
         [HttpGet]
         [Route("api/getallnotes")]
         public IActionResult GetAllNotes(int userId)
