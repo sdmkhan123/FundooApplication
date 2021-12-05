@@ -36,5 +36,17 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
+        public List<CollaboratorModel> GetCollaboratorDetails(int noteId)
+        {
+            try
+            {
+                return this.CollaboratorRepository.GetCollaboratorDetails(noteId);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
     }
 }
