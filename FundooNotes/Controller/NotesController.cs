@@ -388,5 +388,10 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string> { Status = false, Message = ex.Message });
             }
         }
+<<<<<<< HEAD
     }
 }
+=======
+    }*/
+}
+>>>>>>> UserRegistration

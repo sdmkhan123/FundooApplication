@@ -48,7 +48,9 @@ namespace FundooNotes.Controller
 
                 if (result.Equals("Login Successful "))
                 {
-                    return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
+                    return this.Ok(new { Status = true, Message = result, Token = this.manager.JwtToken(loginModel.Email) });
+
+
                 }
                 else
                 {
@@ -103,5 +105,6 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
     }
 }

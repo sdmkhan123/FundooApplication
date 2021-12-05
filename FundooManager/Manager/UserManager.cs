@@ -36,6 +36,17 @@ namespace FundooManager.Interface
                 throw new Exception(e.Message);
             }
         }
+        public string JwtToken(string email)
+        {
+            try
+            {
+                return this.repository.JwtToken(email);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
         public string ResetPassword(ResetPasswordModel resetPasswordModel)
         {
             try

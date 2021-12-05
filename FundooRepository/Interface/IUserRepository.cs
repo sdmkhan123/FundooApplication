@@ -12,5 +12,6 @@ namespace FundooRepository.Interface
         string LogIn(LoginModel login);
         string ResetPassword(ResetPasswordModel userData);
         string ForgotPassword(string emailId);
+        string JwtToken(string email);
     }
 }
