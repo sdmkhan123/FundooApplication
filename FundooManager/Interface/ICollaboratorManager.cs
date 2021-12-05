@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FundooModels;
 
 namespace FundooManager.Interface
 {
     public interface ICollaboratorManager
     {
+        string AddCollaborator(CollaboratorModel collaboratorModel);
     }
 }
