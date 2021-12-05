@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FundooNotes.Controller
 {
-    public class NotesController : Controller
+  /*  public class NotesController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
-    }
+    }*/
 }
