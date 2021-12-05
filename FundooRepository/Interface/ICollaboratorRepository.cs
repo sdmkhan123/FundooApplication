@@ -8,5 +8,6 @@ namespace FundooRepository.Interface
         IConfiguration Configuration { get; }
 
         string AddCollaborator(CollaboratorModel collaboratorModel);
+        string DeleteCollaborator(int collaboratorId);
     }
 }
