@@ -8,5 +8,7 @@ namespace FundooRepository.Interface
         IConfiguration Configuration { get; }
 
         string AddLabelByUserId(LabelModel labelModel);
+        string AddLabelByNoteId(LabelModel labelModel);
+        string DeleteLabel(int userId, string labelName);
     }
 }

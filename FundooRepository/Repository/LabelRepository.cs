@@ -32,7 +32,45 @@ namespace FundooRepository.Repository
                 }
                 return "The label with this name already exists";
             }
-            catch (ArgumentNullException ex)
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public string AddLabelByNoteId(LabelModel labelModel)
+        {
+            try
+            {
+                var validLabel = this.userContext.Labels.Where(x => x.UserId == labelModel.UserId
+                && x.NoteId == labelModel.NoteId).FirstOrDefault();
+                if (validLabel == null)
+                {
+                    this.userContext.Labels.Add(labelModel);
+                    this.userContext.SaveChanges();
+                    return "Label added successfully";
+                }
+                return "The label with this name already exists";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public string DeleteLabel(int userId, string labelName)
+        {
+            try
+            {
+                var validLabel = this.userContext.Labels.Where(x => x.LabelName == labelName 
+                && x.UserId == userId).ToList();
+                if (validLabel != null)
+                {
+                    this.userContext.Labels.RemoveRange(validLabel);
+                    this.userContext.SaveChanges();
+                    return "Label deleted successfully";
+                }
+                return "Label not exist. Kindly create a new one";
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
