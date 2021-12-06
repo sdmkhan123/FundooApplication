@@ -147,5 +147,28 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string> { Status = false, Message = ex.Message });
             }
         }
+        [HttpGet]
+        [Route("api/getlabelbynotesid")]
+        public IActionResult GetLabelByNoteId(int notesId)
+        {
+            try
+            {
+                IEnumerable<LabelModel> result = this.labelManager.GetLabelByNoteId(notesId);
+
+                if (result.Equals(null))
+                {
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Label not found" });
+                }
+                else
+                {
+                    return this.Ok(new ResponseModel<IEnumerable<LabelModel>>() { Status = true, 
+                        Message = "Get Label detail Successfully", Data = result });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new ResponseModel<string> { Status = false, Message = ex.Message });
+            }
+        }
     }
 }

@@ -80,5 +80,16 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
+        public IEnumerable<LabelModel> GetLabelByNoteId(int notesId)
+        {
+            try
+            {
+                return this.labelRepository.GetLabelByNoteId(notesId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
