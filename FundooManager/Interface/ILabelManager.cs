@@ -7,5 +7,6 @@ namespace FundooManager.Interface
         string AddLabelByUserId(LabelModel labelModel);
         string AddLabelByNoteId(LabelModel labelModel);
         string DeleteLabel(int userId, string labelName);
+        string RemoveLabel(int labelId);
     }
 }
