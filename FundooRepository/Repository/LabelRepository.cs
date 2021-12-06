@@ -94,5 +94,22 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+        public string EditLabel(LabelModel labelModel)
+        {
+            try
+            {
+                var validLabel = this.userContext.Labels.Where(x => x.LabelId 
+                == labelModel.LabelId).Select(x => x.LabelName).FirstOrDefault();
+                var prevLabelname = this.userContext.Labels.Where(x => x.LabelName == validLabel).ToList();
+                prevLabelname.ForEach(x => x.LabelName = labelModel.LabelName);
+                this.userContext.Labels.UpdateRange(prevLabelname);
+                this.userContext.SaveChanges();
+                return "Label Edited successfully";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
