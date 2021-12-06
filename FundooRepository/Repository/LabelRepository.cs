@@ -1,10 +1,41 @@
-﻿using System;
+﻿using FundooModels;
+using FundooRepository.Context;
+using FundooRepository.Interface;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace FundooRepository.Repository
 {
-    class LabelRepository
+    public class LabelRepository : ILabelRepository
     {
+        private readonly UserContext userContext;
+        public IConfiguration Configuration { get; }
+        public LabelRepository(IConfiguration configuration, UserContext userContext)
+        {
+            this.Configuration = configuration;
+            this.userContext = userContext;
+        }
+        public string AddLabelByUserId(LabelModel labelModel)
+        {
+            try
+            {
+                var validLabel = this.userContext.Labels.Where(x => x.UserId == labelModel.UserId &&
+                x.LabelName != labelModel.LabelName && x.NoteId == null).FirstOrDefault();
+                if (validLabel == null)
+                {
+                    this.userContext.Labels.Add(labelModel);
+                    this.userContext.SaveChanges();
+                    return "Label added successfully";
+                }
+                return "The label with this name already exists";
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
