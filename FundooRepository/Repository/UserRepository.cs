@@ -10,6 +10,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using StackExchange.Redis;
 
 namespace FundooRepository.Interface
 {
@@ -67,6 +68,12 @@ namespace FundooRepository.Interface
                 }
                 else
                 {
+                    ConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect("127.0.0.1:6379");
+                    IDatabase database = connectionMultiplexer.GetDatabase();
+                    database.StringSet(key: "Firstname", validEmail.FirstName);
+                    database.StringSet(key: "Lastname", validEmail.LastName);
+                    database.StringSet(key: "UserId", validEmail.UserID.ToString());
+                    this.userContext.Update(validEmail);
                     return "Login Successful ";
                 }
             }
@@ -84,11 +91,11 @@ namespace FundooRepository.Interface
         {
             try
             {
-                var validEmailId = this.userContext.Users.Where(x => x.Email == resetPasswordModel.Email).FirstOrDefault();
+                var validEmailId = this.userContext.Users.Where(x => 
+                x.Email == resetPasswordModel.Email).FirstOrDefault();
                 if (validEmailId != null)
                 {
                     validEmailId.Password = EncryptPassword(resetPasswordModel.NewPassword);
-                    this.userContext.Update(validEmailId);
                     this.userContext.SaveChanges();
                     return "Password is updated";
                 }
@@ -111,7 +118,8 @@ namespace FundooRepository.Interface
                 SendMSMQ();
                 mail.Body = ReceiveMSMQ();
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential(this.Configuration["Credentials:testEmailId"], this.Configuration["Credentials:testEmailPassword"]);
+                SmtpServer.Credentials = new System.Net.NetworkCredential(this.Configuration["Credentials:testEmailId"], 
+                    this.Configuration["Credentials:testEmailPassword"]);
                 SmtpServer.EnableSsl = true;
                 SmtpServer.Send(mail);
                 return "Email is sent sucessfully";
@@ -124,13 +132,13 @@ namespace FundooRepository.Interface
         public void SendMSMQ()
         {
             MessageQueue messageQueue;
-            if (MessageQueue.Exists(@".\Private$\Fundoo"))
+            if (MessageQueue.Exists(@".\Private$\FundooNotes"))
             {
-                messageQueue = new MessageQueue(@".\Private$\Fundoo");
+                messageQueue = new MessageQueue(@".\Private$\FundooNotes");
             }
             else
             {
-                messageQueue = MessageQueue.Create(@".\Private$\Fundoo");
+                messageQueue = MessageQueue.Create(@".\Private$\FundooNotes");
             }
             string body = "This is for Testing SMTP mail from GMAIL";
             messageQueue.Label = "Mail Body";
@@ -138,7 +146,7 @@ namespace FundooRepository.Interface
         }
         public string ReceiveMSMQ()
         {
-            MessageQueue messageQueue = new MessageQueue(@".\Private$\Fundoo");
+            MessageQueue messageQueue = new MessageQueue(@".\Private$\FundooNotes");
             var receivemsg = messageQueue.Receive();
             return receivemsg.ToString();
         }

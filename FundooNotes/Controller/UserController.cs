@@ -1,20 +1,46 @@
-﻿using FundooManager.Interface;
-using FundooModels;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="UserController.cs" company="Magic Soft">
+//   Copyright © 2021 Company="Magic Soft"
+// </copyright>
+// <creator name="Saddam Khan"/>
+// ----------------------------------------------------------------------------------------------------------
 
 namespace FundooNotes.Controller
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FundooManager.Interface;
+    using FundooModels;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using StackExchange.Redis;
+
+    /// <summary>
+    /// This is the userController class
+    /// </summary>
     public class UserController : ControllerBase
     {
+        /// <summary>
+        /// Object created for IUserManager
+        /// </summary>
         private readonly IUserManager manager;
 
-        public UserController(IUserManager manager)
+        /// <summary>
+        /// Object created for ILogger
+        /// </summary>
+        private readonly ILogger<UserController> logger;
+
+        /// <summary>
+        /// Initializes a new instance of the UserController class
+        /// </summary>
+        /// <param name="manager">It is an object of the IUserManager class</param>
+        /// <param name="logger">It is an object of the ILogger class</param>
+        public UserController(IUserManager manager, ILogger<UserController> logger)
         {
             this.manager = manager;
+            this.logger = logger;
         }
         [HttpPost]
         [Route("api/register")]
@@ -23,7 +49,7 @@ namespace FundooNotes.Controller
             try
             {
                 string result = this.manager.Register(registerModel);
-
+                this.logger.LogInformation("New user added successfully with Firstname:"+ registerModel.FirstName);
                 if (result.Equals("Registration Successful!"))
                 {
                     return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
@@ -35,9 +61,11 @@ namespace FundooNotes.Controller
             }
             catch (Exception ex)
             {
+                this.logger.LogWarning("Exception caught while registering new user:" + ex.Message);
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
         [HttpPost]
         [Route("api/Login")]
         public IActionResult LogIn([FromBody] LoginModel loginModel)
@@ -48,9 +76,12 @@ namespace FundooNotes.Controller
 
                 if (result.Equals("Login Successful "))
                 {
-                    return this.Ok(new { Status = true, Message = result, Token = this.manager.JwtToken(loginModel.Email) });
-
-
+                    ConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect("127.0.0.1:6379");
+                    IDatabase database = connectionMultiplexer.GetDatabase();
+                    string firstName = database.StringGet("Firstname");
+                    string lastName = database.StringGet("Lastname");
+                    return this.Ok(new { Status = true, Message = result, firstName = firstName, lastName = lastName,
+                        Token = this.manager.JwtToken(loginModel.Email) });
                 }
                 else
                 {
@@ -62,6 +93,7 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
         [HttpPut]
         [Route("api/resetpassword")]
         public IActionResult ResetPassword([FromBody] ResetPasswordModel resetPasswordModel)
@@ -83,6 +115,7 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
         [HttpPost]
         [Route("api/forgetpassword")]
         public IActionResult ForgotPassword(string emailId)
@@ -105,6 +138,5 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
-
     }
 }
