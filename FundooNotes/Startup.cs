@@ -43,11 +43,12 @@ namespace FundooNotes
             this.Configuration = configuration;
         }
 
-        /// <summary>
-        /// This property get 
-        /// </summary>
         public IConfiguration Configuration { get; }
-        // This method gets called by the runtime. Use this method to add services to the container.
+
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services">It is an object of the IServiceCollection</param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();

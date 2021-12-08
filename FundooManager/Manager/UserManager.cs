@@ -1,19 +1,28 @@
-﻿using FundooModels;
-using FundooRepository.Interface;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="UserController.cs" company="Magic Soft">
+//   Copyright © 2021 Company="Magic Soft"
+// </copyright>
+// <creator name="Saddam Khan"/>
+// ----------------------------------------------------------------------------------------------------------
 
 namespace FundooManager.Interface
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using FundooModels;
+    using FundooRepository.Interface;
+
     public class UserManager : IUserManager
     {
         //Declaring obj for the IUserRepository
         private readonly IUserRepository repository;
+
         public UserManager(IUserRepository repository)
         {
             this.repository = repository;
         }
+
         public string Register(RegisterModel registerModel)
         {
             try
@@ -25,6 +34,7 @@ namespace FundooManager.Interface
                 throw new Exception(e.Message);
             }
         }
+
         public string LogIn(LoginModel loginModel)
         {
             try
@@ -36,6 +46,7 @@ namespace FundooManager.Interface
                 throw new Exception(e.Message);
             }
         }
+
         public string JwtToken(string email)
         {
             try
@@ -47,6 +58,7 @@ namespace FundooManager.Interface
                 throw new Exception(e.Message);
             }
         }
+
         public string ResetPassword(ResetPasswordModel resetPasswordModel)
         {
             try
@@ -58,6 +70,7 @@ namespace FundooManager.Interface
                 throw new Exception(ex.Message);
             }
         }
+
         public string ForgotPassword(string emailId)
         {
             try
