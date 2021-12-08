@@ -43,6 +43,9 @@ namespace FundooNotes
             this.Configuration = configuration;
         }
 
+        /// <summary>
+        /// Gets the configuration
+        /// </summary>
         public IConfiguration Configuration { get; }
 
         /// <summary>
@@ -61,7 +64,11 @@ namespace FundooNotes
             services.AddTransient<ICollaboratorManager, CollaboratorManager>();
             services.AddTransient<ILabelRepository, LabelRepository>();
             services.AddTransient<ILabelManager, LabelManager>();
-            services.AddCors(options => options.AddPolicy("AllowAllHeaders", builder =>
+
+            services.AddCors(options =>
+            options.AddPolicy(
+                "AllowAllHeaders",
+            builder =>
             {
                 builder.AllowAnyOrigin()
                 .AllowAnyMethod()
@@ -70,7 +77,10 @@ namespace FundooNotes
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1.0", new OpenApiInfo { Title = "My Demo Api", Version = "1.0" });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+
+                c.AddSecurityDefinition(
+                    "Bearer",
+                new OpenApiSecurityScheme()
                 {
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey,
@@ -83,15 +93,17 @@ namespace FundooNotes
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
-                          new OpenApiSecurityScheme
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
                             {
-                                Reference = new OpenApiReference
-                                {
-                                    Type = ReferenceType.SecurityScheme,
-                                    Id = "Bearer"
-                                }
-                            },
-                            new string[] {}
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[]
+                        {
+                        }
                     }
                 });
             });
@@ -99,7 +111,6 @@ namespace FundooNotes
             {
                 option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
             }).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -108,12 +119,18 @@ namespace FundooNotes
                     ValidateAudience = false,
                     ValidateLifetime = false,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"])) //Configuration["JwtToken:SecretKey"]  
+
+                    ////Configuration["JwtToken:SecretKey"] 
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"])) 
                 };
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// method for Configure
+        /// </summary>
+        /// <param name="app">app as parameter</param>
+        /// <param name="env">host for web application passed as env</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -123,9 +140,11 @@ namespace FundooNotes
             else
             {
                 app.UseExceptionHandler("/Error");
+
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
