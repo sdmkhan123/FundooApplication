@@ -1,33 +1,51 @@
-using FundooManager.Interface;
-using FundooManager.Manager;
-using FundooRepository.Context;
-using FundooRepository.Interface;
-using FundooRepository.Repository;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Startup.cs" company="Magic Soft">
+//   Copyright © 2021 Company="Magic Soft"
+// </copyright>
+// <creator name="Saddam Khan"/>
+// ----------------------------------------------------------------------------------------------------------
 
 namespace FundooNotes
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using FundooManager.Interface;
+    using FundooManager.Manager;
+    using FundooRepository.Context;
+    using FundooRepository.Interface;
+    using FundooRepository.Repository;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.HttpsPolicy;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.IdentityModel.Tokens;
+    using Microsoft.OpenApi;
+    using Microsoft.OpenApi.Models;
+
+    /// <summary>
+    /// This is the Startup class
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Initializes a new instance of the Startup class
+        /// </summary>
+        /// <param name="configuration">It is an object of the IConfiguration</param>
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
         }
+
+        /// <summary>
+        /// This property get 
+        /// </summary>
         public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -93,6 +111,7 @@ namespace FundooNotes
                 };
             });
         }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

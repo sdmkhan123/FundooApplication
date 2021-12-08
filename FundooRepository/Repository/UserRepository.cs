@@ -118,7 +118,8 @@ namespace FundooRepository.Interface
                 SendMSMQ();
                 mail.Body = ReceiveMSMQ();
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential(this.Configuration["Credentials:testEmailId"], 
+                SmtpServer.Credentials = new System.Net.NetworkCredential(
+                    this.Configuration["Credentials:testEmailId"], 
                     this.Configuration["Credentials:testEmailPassword"]);
                 SmtpServer.EnableSsl = true;
                 SmtpServer.Send(mail);

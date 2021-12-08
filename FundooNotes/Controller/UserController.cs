@@ -42,6 +42,12 @@ namespace FundooNotes.Controller
             this.manager = manager;
             this.logger = logger;
         }
+
+        /// <summary>
+        /// Implemented Register API
+        /// </summary>
+        /// <param name="registerModel">It is an object of the of RegisterModel class</param>
+        /// <returns>This methods returns IActionResult for User Registration</returns>
         [HttpPost]
         [Route("api/register")]
         public IActionResult Register([FromBody] RegisterModel registerModel)
@@ -49,7 +55,7 @@ namespace FundooNotes.Controller
             try
             {
                 string result = this.manager.Register(registerModel);
-                this.logger.LogInformation("New user added successfully with Firstname:"+ registerModel.FirstName);
+                this.logger.LogInformation("New user added successfully with Firstname:" + registerModel.FirstName);
                 if (result.Equals("Registration Successful!"))
                 {
                     return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
@@ -66,6 +72,11 @@ namespace FundooNotes.Controller
             }
         }
 
+        /// <summary>
+        /// Implemented Login API
+        /// </summary>
+        /// <param name="loginModel">It is an object of the of LoginModel class</param>
+        /// <returns>This methods returns IActionResult for User Login</returns>
         [HttpPost]
         [Route("api/Login")]
         public IActionResult LogIn([FromBody] LoginModel loginModel)
@@ -80,8 +91,7 @@ namespace FundooNotes.Controller
                     IDatabase database = connectionMultiplexer.GetDatabase();
                     string firstName = database.StringGet("Firstname");
                     string lastName = database.StringGet("Lastname");
-                    return this.Ok(new { Status = true, Message = result, firstName = firstName, lastName = lastName,
-                        Token = this.manager.JwtToken(loginModel.Email) });
+                    return this.Ok(new { Status = true, Message = result, firstName = firstName, lastName = lastName, Token = this.manager.JwtToken(loginModel.Email) });
                 }
                 else
                 {
@@ -94,6 +104,11 @@ namespace FundooNotes.Controller
             }
         }
 
+        /// <summary>
+        /// Implemented reset Password API
+        /// </summary>
+        /// <param name="resetPasswordModel">It is an object of the ResetPasswordModel</param>
+        /// <returns>return the IActionResult</returns>
         [HttpPut]
         [Route("api/resetpassword")]
         public IActionResult ResetPassword([FromBody] ResetPasswordModel resetPasswordModel)
@@ -116,6 +131,11 @@ namespace FundooNotes.Controller
             }
         }
 
+        /// <summary>
+        /// Implemented forget password API
+        /// </summary>
+        /// <param name="emailId">It is parameter passing to function</param>
+        /// <returns>return the IActionResult</returns>
         [HttpPost]
         [Route("api/forgetpassword")]
         public IActionResult ForgotPassword(string emailId)
