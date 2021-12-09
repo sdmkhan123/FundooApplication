@@ -219,8 +219,8 @@ namespace FundooRepository.Interface
         {
             MessageQueue messageQueue = new MessageQueue(@".\Private$\FundooNotes");
             var receivemsg = messageQueue.Receive();
-
-            return receivemsg.ToString();
+            receivemsg.Formatter = new XmlMessageFormatter(new Type[] { typeof(string) });
+            return receivemsg.Body.ToString();
         }
 
         /// <summary>
