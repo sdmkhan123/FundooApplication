@@ -1,4 +1,10 @@
-﻿using System;
+﻿// ************************************************************************************
+// <copyright file="ResetPasswordModel.cs" company="Magic Soft">
+//   Copyright © 2021 Company="Magic Soft"
+// </copyright>
+// <creator name="Saddam Khan"/>
+// ************************************************************************************
+using System;
 using System.Collections.Generic;
 using System.Text;
 
