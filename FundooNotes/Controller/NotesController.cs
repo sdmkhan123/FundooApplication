@@ -1,24 +1,47 @@
-﻿using FundooManager.Interface;
-using FundooModels;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="NotesController.cs" company="Magic Soft">
+//   Copyright © 2021 Company="Magic Soft"
+// </copyright>
+// <creator name="Saddam Khan"/>
+// ----------------------------------------------------------------------------------------------------------
 
 namespace FundooNotes.Controller
 {
-    //[Authorize]
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FundooManager.Interface;
+    using FundooModels;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
+    /// <summary>
+    /// Notes controller class for API related to Notes
+    /// </summary>
+    [Authorize]
     public class NotesController : ControllerBase
     {
+        /// <summary>
+        /// Declaring a object for note manager
+        /// </summary>
         private readonly INotesManager notesManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotesController"/> class
+        /// </summary>
+        /// <param name="notesManager">passing a notes manager as parameter of type INotesManager</param>
         public NotesController(INotesManager notesManager)
         {
             this.notesManager = notesManager;
         }
+
+        /// <summary>
+        /// Implemented AddNote API
+        /// </summary>
+        /// <param name="notesModel">passing notesModel as parameter of type NotesModel</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpPost]
         [Route("api/addanote")]
         public IActionResult AddANote([FromBody] NotesModel notesModel)
@@ -40,6 +63,12 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented EditANote API
+        /// </summary>
+        /// <param name="notesModel">passing notesModel as parameter of type NotesModel</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpPut]
         [Route("api/editanote")]
         public IActionResult EditANote([FromBody] NotesModel notesModel)
@@ -61,6 +90,13 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented AddImage API
+        /// </summary>
+        /// <param name="noteId">passing noteId as parameter of type INT</param>
+        /// <param name="imagePath">passing imagePath as parameter of type IFormFile</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpPut]
         [Route("api/addimage")]
         public IActionResult AddImage(int noteId, IFormFile imagePath)
@@ -76,14 +112,19 @@ namespace FundooNotes.Controller
                 {
                     return this.BadRequest(new ResponseModel<string>() { Status = false, Message = result });
                 }
-
-
             }
             catch (Exception ex)
             {
                 return this.NotFound(new ResponseModel<string>() { Status = true, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented ChangeAColor API
+        /// </summary>
+        /// <param name="noteId">passing noteId as parameter of type INT</param>
+        /// <param name="noteColor">passing noteColor as parameter of type string</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpPut]
         [Route("api/changeacolor")]
         public IActionResult ChangeAColor(int noteId, string noteColor)
@@ -105,6 +146,13 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented AddRemindMe API
+        /// </summary>
+        /// <param name="notesId">passing noteId as parameter of type INT</param>
+        /// <param name="remindMeNotes">passing remindMeNotes as parameter of type string</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpPut]
         [Route("api/addremindme")]
         public IActionResult AddRemindMe(int notesId, string remindMeNotes)
@@ -126,6 +174,12 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented DeleteRemindMe API
+        /// </summary>
+        /// <param name="notesId">passing noteId as parameter of type INT</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpPut]
         [Route("api/deletermideme")]
         public IActionResult DeleteRemindMe(int notesId)
@@ -147,6 +201,12 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented DeleteANote API
+        /// </summary>
+        /// <param name="notesId">passing noteId as parameter of type INT</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpPut]
         [Route("api/deleteanote")]
         public IActionResult DeleteANote(int notesId)
@@ -168,6 +228,12 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented RestoreFromTrash API
+        /// </summary>
+        /// <param name="notesId">passing noteId as parameter of type INT</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpPut]
         [Route("api/restorefromtrash")]
         public IActionResult RestoreFromTrash(int notesId)
@@ -189,6 +255,12 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented DeleteNoteForever API
+        /// </summary>
+        /// <param name="notesId">passing noteId as parameter of type INT</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpDelete]
         [Route("api/deletenoteforever")]
         public IActionResult DeleteNoteForever(int notesId)
@@ -210,6 +282,12 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented Archive API
+        /// </summary>
+        /// <param name="noteId">passing noteId as parameter of type INT</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpPut]
         [Route("api/archive")]
         public IActionResult Archive(int noteId)
@@ -231,6 +309,12 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented UnArchive API
+        /// </summary>
+        /// <param name="noteId">passing noteId as parameter of type INT</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpPut]
         [Route("api/unarchive")]
         public IActionResult UnArchive(int noteId)
@@ -252,6 +336,12 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented Pin API
+        /// </summary>
+        /// <param name="notesId">passing noteId as parameter of type INT</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpPut]
         [Route("api/pin")]
         public IActionResult Pin(int notesId)
@@ -273,6 +363,12 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented UnPin API
+        /// </summary>
+        /// <param name="noteId">passing noteId as parameter of type INT</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpPut]
         [Route("api/unpin")]
         public IActionResult UnPin(int noteId)
@@ -294,6 +390,12 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented GetAllArchiveNotes API
+        /// </summary>
+        /// <param name="userId">passing userId as parameter of type INT</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpGet]
         [Route("api/getallarchievednotes")]
         public IActionResult GetAllArchiveNotes(int userId)
@@ -304,13 +406,11 @@ namespace FundooNotes.Controller
 
                 if (result.Equals(null))
                 {
-                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = 
-                        "There are no Archive notes to be Get" });
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "There are no Archive notes to be Get" });
                 }
                 else
                 {
-                    return this.Ok(new ResponseModel<IEnumerable<NotesModel>>() { Status = true, Message = 
-                        "Get Archive Notes successfully", Data = result });
+                    return this.Ok(new ResponseModel<IEnumerable<NotesModel>>() { Status = true, Message = "Get Archive Notes successfully", Data = result });
                 }
             }
             catch (Exception ex)
@@ -318,6 +418,12 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string> { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented GetAllReminderNotes API
+        /// </summary>
+        /// <param name="userId">passing userId as parameter of type INT</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpGet]
         [Route("api/getallremindernotes")]
         public IActionResult GetAllReminderNotes(int userId)
@@ -328,13 +434,11 @@ namespace FundooNotes.Controller
 
                 if (result.Equals(null))
                 {
-                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = 
-                        "Thee is no Note Reminder created for this userId" });
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Thee is no Note Reminder created for this userId" });
                 }
                 else
                 {
-                    return this.Ok(new ResponseModel<IEnumerable<NotesModel>>() { Status = true, Message = 
-                        "Get NoteReminder successfully", Data = result });
+                    return this.Ok(new ResponseModel<IEnumerable<NotesModel>>() { Status = true, Message = "Get NoteReminder successfully", Data = result });
                 }
             }
             catch (Exception ex)
@@ -342,6 +446,12 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string> { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented GetAllTrashNotes API
+        /// </summary>
+        /// <param name="userId">passing userId as parameter of type INT</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpGet]
         [Route("api/getalltrashnotes")]
         public IActionResult GetAllTrashNotes(int userId)
@@ -352,13 +462,11 @@ namespace FundooNotes.Controller
 
                 if (result.Equals(null))
                 {
-                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = 
-                        "There is no Notes in Trash for this UserId" });
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "There is no Notes in Trash for this UserId" });
                 }
                 else
                 {
-                    return this.Ok(new ResponseModel<IEnumerable<NotesModel>>() { Status = true, Message = 
-                        "Get Notes from the trash successfully", Data = result });
+                    return this.Ok(new ResponseModel<IEnumerable<NotesModel>>() { Status = true, Message = "Get Notes from the trash successfully", Data = result });
                 }
             }
             catch (Exception ex)
@@ -366,6 +474,12 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string> { Status = false, Message = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Implemented GetAllNotes API
+        /// </summary>
+        /// <param name="userId">passing userId as parameter of type INT</param>
+        /// <returns>Returns a IAction Result</returns>
         [HttpGet]
         [Route("api/getallnotes")]
         public IActionResult GetAllNotes(int userId)
@@ -376,13 +490,11 @@ namespace FundooNotes.Controller
 
                 if (result.Equals(null))
                 {
-                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = 
-                        "No note exists whose data is data is to be retrieved" });
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "No note exists whose data is data is to be retrieved" });
                 }
                 else
                 {
-                    return this.Ok(new ResponseModel<IEnumerable<NotesModel>>() { Status = true, Message = 
-                        "Data for all notes is retrived successfully", Data = result });
+                    return this.Ok(new ResponseModel<IEnumerable<NotesModel>>() { Status = true, Message = "Data for all notes is retrived successfully", Data = result });
                 }
             }
             catch (Exception ex)
