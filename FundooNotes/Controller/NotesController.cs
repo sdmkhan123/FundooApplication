@@ -20,7 +20,7 @@ namespace FundooNotes.Controller
     /// <summary>
     /// Notes controller class for API related to Notes
     /// </summary>
-    [Authorize]
+    ////[Authorize]
     public class NotesController : ControllerBase
     {
         /// <summary>

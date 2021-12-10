@@ -1,11 +1,11 @@
-﻿using FundooModels;
-using FundooRepository.Context;
-using FundooRepository.Interface;
-using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FundooModels;
+using FundooRepository.Context;
+using FundooRepository.Interface;
+using Microsoft.Extensions.Configuration;
 
 namespace FundooRepository.Repository
 {
@@ -22,9 +22,8 @@ namespace FundooRepository.Repository
         {
             try
             {
-                var validLabel = this.userContext.Labels.Where(x => x.UserId == labelModel.UserId &&
-                x.LabelName != labelModel.LabelName && x.NoteId == null).FirstOrDefault();
-                if (validLabel == null)
+                var validLabel = this.userContext.Labels.Where(x => x.UserId == labelModel.UserId && x.LabelName != labelModel.LabelName && x.NoteId == null).FirstOrDefault();
+                if (validLabel != null)
                 {
                     this.userContext.Labels.Add(labelModel);
                     this.userContext.SaveChanges();
@@ -41,9 +40,8 @@ namespace FundooRepository.Repository
         {
             try
             {
-                var validLabel = this.userContext.Labels.Where(x => x.UserId == labelModel.UserId
-                && x.NoteId == labelModel.NoteId).FirstOrDefault();
-                if (validLabel == null)
+                var validLabel = this.userContext.Labels.Where(x => x.UserId == labelModel.UserId && x.NoteId == labelModel.NoteId).FirstOrDefault();
+                if (validLabel != null)
                 {
                     this.userContext.Labels.Add(labelModel);
                     this.userContext.SaveChanges();
@@ -60,8 +58,7 @@ namespace FundooRepository.Repository
         {
             try
             {
-                var validLabel = this.userContext.Labels.Where(x => x.LabelName == labelName 
-                && x.UserId == userId).ToList();
+                var validLabel = this.userContext.Labels.Where(x => x.LabelName == labelName && x.UserId == userId).ToList();
                 if (validLabel != null)
                 {
                     this.userContext.Labels.RemoveRange(validLabel);
@@ -98,8 +95,7 @@ namespace FundooRepository.Repository
         {
             try
             {
-                var validLabel = this.userContext.Labels.Where(x => x.LabelId 
-                == labelModel.LabelId).Select(x => x.LabelName).FirstOrDefault();
+                var validLabel = this.userContext.Labels.Where(x => x.LabelId == labelModel.LabelId).Select(x => x.LabelName).FirstOrDefault();
                 var prevLabelname = this.userContext.Labels.Where(x => x.LabelName == validLabel).ToList();
                 prevLabelname.ForEach(x => x.LabelName = labelModel.LabelName);
                 this.userContext.Labels.UpdateRange(prevLabelname);
