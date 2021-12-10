@@ -32,7 +32,7 @@ namespace FundooNotes.Controller
                 }
                 else
                 {
-                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = result });
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Note creation is unsuccesful" });
                 }
             }
             catch (Exception ex)
