@@ -25,16 +25,9 @@ namespace FundooRepository.Repository
         {
             try
             {
-                if (notesModel != null)
-                {
-                    this.userContext.Notes.Add(notesModel);
-                    this.userContext.SaveChanges();
-                    return "New note Added successfully";
-                }
-                else
-                {
-                    return "Note creation is unsuccesful";
-                }
+                this.userContext.Notes.Add(notesModel);
+                this.userContext.SaveChanges();
+                return "New note Added successfully";
             }
             catch (ArgumentNullException ex)
             {
