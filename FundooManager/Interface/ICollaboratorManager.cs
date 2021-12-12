@@ -7,6 +7,6 @@ namespace FundooManager.Interface
     {
         string AddCollaborator(CollaboratorModel collaboratorModel);
         string DeleteCollaborator(int collaboratorData);
-        List<CollaboratorModel> GetCollaboratorDetails(int noteId);
+        IEnumerable<CollaboratorModel> GetCollaboratorDetails(int noteId);
     }
 }

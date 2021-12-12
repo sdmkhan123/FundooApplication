@@ -7,11 +7,10 @@ namespace FundooRepository.Interface
     public interface ILabelRepository
     {
         IConfiguration Configuration { get; }
-        string AddLabelByUserId(LabelModel labelModel);
-        string AddLabelByNoteId(LabelModel labelModel);
+        string AddLabel(LabelModel labelModel);
         string DeleteLabel(int userId, string labelName);
         string RemoveLabel(int labelId);
-        string EditLabel(LabelModel labelModel);
+        string EditLabel(LabelModel labelModel, string labelName);
         IEnumerable<string> GetLabelByUserId(int userId);
         IEnumerable<LabelModel> GetLabelByNoteId(int notesId);
     }

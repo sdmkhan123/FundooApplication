@@ -57,11 +57,11 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
-        public List<CollaboratorModel> GetCollaboratorDetails(int noteId)
+        public IEnumerable<CollaboratorModel> GetCollaboratorDetails(int noteId)
         {
             try
             {
-                List<CollaboratorModel> Collaborator = this.userContext.Collaborators.Where(x => x.NoteId == noteId).ToList();
+                IEnumerable <CollaboratorModel> Collaborator = this.userContext.Collaborators.Where(x => x.NoteId == noteId).ToList();
                 if (Collaborator != null)
                 {
                     return Collaborator;

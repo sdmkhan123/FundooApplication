@@ -1,26 +1,36 @@
-﻿using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
-using FundooModels;
-using FundooRepository.Context;
-using FundooRepository.Interface;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// ********************************************************************************
+// <copyright file="NotesRepository.cs" company="Magic Soft">
+//   Copyright © 2021 Company="Magic Soft"
+// </copyright>
+// <creator name="Saddam Khan"/>
+// ********************************************************************************
 
 namespace FundooRepository.Repository
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
+    using FundooModels;
+    using FundooRepository.Context;
+    using FundooRepository.Interface;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
+
     public class NotesRepository : INotesRepository
     {
         private readonly UserContext userContext;
+
         public IConfiguration Configuration { get; }
+
         public NotesRepository(IConfiguration configuration, UserContext userContext)
         {
             this.Configuration = configuration;
             this.userContext = userContext;
         }
+
         public string AddANote(NotesModel notesModel)
         {
             try
@@ -34,6 +44,7 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public string EditANote(NotesModel notesModel)
         {
             try
@@ -64,6 +75,7 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public string ChangeAColor(int noteId, string noteColor)
         {
             try
@@ -83,6 +95,7 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public string AddImage(int noteId, IFormFile imagePath)
         {
             try
@@ -116,6 +129,7 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public string AddRemindMe(int notesId, string remindMeNotes)
         {
             try
@@ -138,6 +152,7 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public string DeleteRemindMe(int notesId)
         {
             try
@@ -157,6 +172,7 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public string DeleteANote(int notesId)
         {
             try
@@ -187,6 +203,7 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public string RestoreFromTrash(int notesId)
         {
             try
@@ -209,6 +226,7 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public string DeleteNoteForever(int notesId)
         {
             try
@@ -230,6 +248,7 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public string Archive(int noteId)
         {
             try
@@ -259,6 +278,7 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public string UnArchive(int noteId)
         {
             try
@@ -281,6 +301,7 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public string Pin(int notesId)
         {
             try
@@ -313,6 +334,7 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public string UnPin(int notesId)
         {
             try
@@ -335,12 +357,12 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public IEnumerable<NotesModel> GetAllArchiveNotes(int userId)
         {
             try
             {
-                IEnumerable<NotesModel> validUserId = 
-                    this.userContext.Notes.Where(x => x.UserId == userId && x.Archive == true);
+                IEnumerable<NotesModel> validUserId = this.userContext.Notes.Where(x => x.UserId == userId && x.Archive == true);
                 if (validUserId != null)
                 {
                     return validUserId;
@@ -352,12 +374,12 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public IEnumerable<NotesModel> GetAllReminderNotes(int userId)
         {
             try
             {
-                IEnumerable<NotesModel> validReminder = 
-                    this.userContext.Notes.Where(x => x.UserId == userId && x.RemindeMe != null);
+                IEnumerable<NotesModel> validReminder = this.userContext.Notes.Where(x => x.UserId == userId && x.RemindeMe != null);
                 if (validReminder != null)
                 {
                     return validReminder;
@@ -369,12 +391,12 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public IEnumerable<NotesModel> GetAllTrashNotes(int userId)
         {
             try
             {
-                IEnumerable<NotesModel> validTrashedNotes = 
-                    this.userContext.Notes.Where(x => (x.UserId == userId && x.Trash == true));
+                IEnumerable<NotesModel> validTrashedNotes = this.userContext.Notes.Where(x => (x.UserId == userId && x.Trash == true));
                 if (validTrashedNotes != null)
                 {
                     return validTrashedNotes;
@@ -386,13 +408,12 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
         public IEnumerable<NotesModel> GetAllNotes(int userId)
         {
             try
             {
-                IEnumerable<NotesModel> dataFromAllNotes = (from notes in this.userContext.Notes 
-                                                            where notes.UserId == userId && notes.Archive == false && 
-                                                            notes.Trash == false select notes);
+                IEnumerable<NotesModel> dataFromAllNotes = (from notes in this.userContext.Notes where notes.UserId == userId && notes.Archive == false && notes.Trash == false select notes);
                 if (dataFromAllNotes != null)
                 {
                     return dataFromAllNotes;

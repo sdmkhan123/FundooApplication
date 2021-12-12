@@ -18,29 +18,11 @@ namespace FundooRepository.Repository
             this.Configuration = configuration;
             this.userContext = userContext;
         }
-        public string AddLabelByUserId(LabelModel labelModel)
+        public string AddLabel(LabelModel labelModel)
         {
             try
             {
-                var validLabel = this.userContext.Labels.Where(x => x.UserId == labelModel.UserId && x.LabelName != labelModel.LabelName && x.NoteId == null).FirstOrDefault();
-                if (validLabel != null)
-                {
-                    this.userContext.Labels.Add(labelModel);
-                    this.userContext.SaveChanges();
-                    return "Label added successfully";
-                }
-                return "The label with this name already exists";
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        public string AddLabelByNoteId(LabelModel labelModel)
-        {
-            try
-            {
-                var validLabel = this.userContext.Labels.Where(x => x.UserId == labelModel.UserId && x.NoteId == labelModel.NoteId).FirstOrDefault();
+                var validLabel = this.userContext.Labels.Where(x => (x.UserId == labelModel.UserId && x.LabelName != labelModel.LabelName && x.NoteId == labelModel.NoteId) ||(x.UserId == labelModel.UserId && x.LabelName != labelModel.LabelName && x.NoteId == null)).FirstOrDefault();
                 if (validLabel != null)
                 {
                     this.userContext.Labels.Add(labelModel);
@@ -91,16 +73,22 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
-        public string EditLabel(LabelModel labelModel)
+        public string EditLabel(LabelModel labelModel, string labelName)
         {
             try
             {
-                var validLabel = this.userContext.Labels.Where(x => x.LabelId == labelModel.LabelId).Select(x => x.LabelName).FirstOrDefault();
-                var prevLabelname = this.userContext.Labels.Where(x => x.LabelName == validLabel).ToList();
-                prevLabelname.ForEach(x => x.LabelName = labelModel.LabelName);
-                this.userContext.Labels.UpdateRange(prevLabelname);
-                this.userContext.SaveChanges();
-                return "Label Edited successfully";
+                var validLabel = this.userContext.Labels.Where(x => x.LabelId == labelModel.LabelId && x.LabelName == labelModel.LabelName).FirstOrDefault();
+                if (validLabel != null)
+                {
+                    validLabel.LabelName = labelName;
+                    this.userContext.Labels.UpdateRange(validLabel);
+                    this.userContext.SaveChanges();
+                    return "Label Edited successfully";
+                }
+                else
+                {
+                    return "This Label name does not exist";
+                }
             }
             catch (Exception ex)
             {
@@ -111,8 +99,7 @@ namespace FundooRepository.Repository
         {
             try
             {
-                IEnumerable<string> validLabel = this.userContext.Labels.Where(x => 
-                x.UserId == userId).Select(x => x.LabelName);
+                IEnumerable<string> validLabel = this.userContext.Labels.Where(x => x.UserId == userId).Select(x => x.LabelName);
                 if (validLabel != null)
                 {
                     return validLabel;
@@ -133,7 +120,6 @@ namespace FundooRepository.Repository
                 {
                     return validLabel;
                 }
-
                 return null;
             }
             catch (Exception ex)

@@ -10,7 +10,6 @@ namespace FundooNotes.Controller
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using FundooManager.Interface;
     using FundooModels;
     using Microsoft.AspNetCore.Mvc;
