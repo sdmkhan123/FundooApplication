@@ -14,22 +14,11 @@ namespace FundooManager.Manager
         {
             this.labelRepository = labelRepository;
         }
-        public string AddLabelByUserId(LabelModel labelModel)
+        public string AddLabel(LabelModel labelModel)
         {
             try
             {
-                return this.labelRepository.AddLabelByUserId(labelModel);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        public string AddLabelByNoteId(LabelModel labelModel)
-        {
-            try
-            {
-                return this.labelRepository.AddLabelByNoteId(labelModel);
+                return this.labelRepository.AddLabel(labelModel);
             }
             catch (Exception ex)
             {
@@ -58,11 +47,11 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
-        public string EditLabel(LabelModel labelModel)
+        public string EditLabel(LabelModel labelModel, string labelName)
         {
             try
             {
-                return this.labelRepository.EditLabel(labelModel);
+                return this.labelRepository.EditLabel(labelModel, labelName);
             }
             catch (Exception ex)
             {

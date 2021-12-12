@@ -36,7 +36,7 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
-        public List<CollaboratorModel> GetCollaboratorDetails(int noteId)
+        public IEnumerable<CollaboratorModel> GetCollaboratorDetails(int noteId)
         {
             try
             {

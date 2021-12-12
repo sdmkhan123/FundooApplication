@@ -68,8 +68,8 @@ namespace FundooNotes.Controller
                 var result = this.collaboratorManager.GetCollaboratorDetails(noteId);
                 if (result != null)
                 {
-                    return this.Ok(new ResponseModel<List<CollaboratorModel>>() { Status = true, 
-                        Message = "Collaborator details fetched successfully", Data = result });
+                    return this.Ok(new ResponseModel<IEnumerable<CollaboratorModel>>() { Status = true, 
+                        Message = "Collaborator details fetched successfully", Data = result});
                 }
                 else
                 {

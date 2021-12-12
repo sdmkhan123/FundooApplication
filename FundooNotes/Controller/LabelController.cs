@@ -16,12 +16,12 @@ namespace FundooNotes.Controller
             this.labelManager = labelManager;
         }
         [HttpPost]
-        [Route("api/addlabelbyuserid")]
-        public IActionResult AddLabelByUserId([FromBody] LabelModel labelModel)
+        [Route("api/addlabel")]
+        public IActionResult AddLabel([FromBody] LabelModel labelModel)
         {
             try
             {
-                string result = this.labelManager.AddLabelByUserId(labelModel);
+                string result = this.labelManager.AddLabel(labelModel);
 
                 if (result.Equals("Label added successfully"))
                 {
@@ -37,7 +37,7 @@ namespace FundooNotes.Controller
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
-        [HttpPost]
+        /*[HttpPost]
         [Route("api/addlabelbynoteid")]
         public IActionResult AddLabelByNoteId([FromBody] LabelModel labelModel)
         {
@@ -58,7 +58,7 @@ namespace FundooNotes.Controller
             {
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
-        }
+        }*/
         [HttpDelete]
         [Route("api/deletelabel")]
         public IActionResult DeleteLabel(int userId, string labelName)
@@ -105,11 +105,11 @@ namespace FundooNotes.Controller
         }
         [HttpPut]
         [Route("api/editlabel")]
-        public IActionResult EditLabel([FromBody] LabelModel labelModel)
+        public IActionResult EditLabel([FromBody] LabelModel labelModel, string labelName)
         {
             try
             {
-                string result = this.labelManager.EditLabel(labelModel);
+                string result = this.labelManager.EditLabel(labelModel, labelName);
 
                 if (result.Equals("Label Edited successfully"))
                 {
