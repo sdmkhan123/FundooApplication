@@ -19,17 +19,23 @@ namespace FundooRepository.Repository
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;
 
+    /// <summary>
+    /// Class for NoteRepository with all Note functionalities
+    /// </summary>
     public class NotesRepository : INotesRepository
     {
+        /// <summary>
+        /// User Context Objects
+        /// </summary>
         private readonly UserContext userContext;
-
-        public IConfiguration Configuration { get; }
 
         public NotesRepository(IConfiguration configuration, UserContext userContext)
         {
             this.Configuration = configuration;
             this.userContext = userContext;
         }
+
+        public IConfiguration Configuration { get; }
 
         public string AddANote(NotesModel notesModel)
         {
@@ -88,6 +94,7 @@ namespace FundooRepository.Repository
                     this.userContext.SaveChanges();
                     return "Color is changed successfully";
                 }
+
                 return "Color update is unsuccessful";
             }
             catch (Exception ex)
@@ -165,6 +172,7 @@ namespace FundooRepository.Repository
                     this.userContext.SaveChanges();
                     return "Reminder deleted successfully";
                 }
+
                 return "This Reminder does not exist. Kindly create a new one";
             }
             catch (ArgumentNullException ex)
@@ -188,12 +196,14 @@ namespace FundooRepository.Repository
                         validNoteId.PinNote = false;
                         showMessage = "Note unpinned and trashed sucessfully";
                     }
+
                     showMessage = "Note trashed successfully";
                 }
                 else
                 {
                     showMessage = "This note does not exist. Kindly create a new one";
                 }
+
                 this.userContext.Notes.Update(validNoteId);
                 this.userContext.SaveChanges();
                 return showMessage;
@@ -263,12 +273,14 @@ namespace FundooRepository.Repository
                         validNote.PinNote = false;
                         showMessage = "Note is unpinned and archived successfully";
                     }
+
                     showMessage = "Note is archived successfully";
                 }
                 else
                 {
                     showMessage = "This note does not exist";
                 }
+
                 this.userContext.Notes.Update(validNote);
                 this.userContext.SaveChanges();
                 return showMessage;
@@ -325,6 +337,7 @@ namespace FundooRepository.Repository
                 {
                     showMessage = "This note does not exist";
                 }
+
                 this.userContext.Notes.Update(valiNoteId);
                 this.userContext.SaveChanges();
                 return showMessage;
@@ -367,6 +380,7 @@ namespace FundooRepository.Repository
                 {
                     return validUserId;
                 }
+
                 return null;
             }
             catch (Exception ex)
@@ -384,6 +398,7 @@ namespace FundooRepository.Repository
                 {
                     return validReminder;
                 }
+
                 return null;
             }
             catch (Exception ex)
@@ -401,6 +416,7 @@ namespace FundooRepository.Repository
                 {
                     return validTrashedNotes;
                 }
+
                 return null;
             }
             catch (Exception ex)
@@ -413,11 +429,12 @@ namespace FundooRepository.Repository
         {
             try
             {
-                IEnumerable<NotesModel> dataFromAllNotes = (from notes in this.userContext.Notes where notes.UserId == userId && notes.Archive == false && notes.Trash == false select notes);
+                IEnumerable<NotesModel> dataFromAllNotes = from notes in this.userContext.Notes where notes.UserId == userId && notes.Archive == false && notes.Trash == false select notes;
                 if (dataFromAllNotes != null)
                 {
                     return dataFromAllNotes;
                 }
+
                 return null;
             }
             catch (Exception ex)
