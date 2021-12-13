@@ -14,6 +14,7 @@ namespace FundooRepository.Interface
     using System.Net.Mail;
     using System.Security.Claims;
     using System.Text;
+    using System.Threading.Tasks;
     using Experimental.System.Messaging;
     using FundooModels;
     using FundooRepository.Context;
@@ -52,7 +53,7 @@ namespace FundooRepository.Interface
         /// </summary>
         /// <param name="registerModel">passing parameter of type RegisterModel</param>
         /// <returns>Returns string if Registration is successful or unsuccessful</returns>
-        public string Register(RegisterModel registerModel)
+        public async Task<string> Register(RegisterModel registerModel)
         {
             try
             {
@@ -63,7 +64,7 @@ namespace FundooRepository.Interface
                     {
                         registerModel.Password = this.EncryptPassword(registerModel.Password);
                         this.userContext.Add(registerModel);
-                        this.userContext.SaveChanges();
+                        await this.userContext.SaveChangesAsync();
                         return "Registration Successful!";
                     }
 

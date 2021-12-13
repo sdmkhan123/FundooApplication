@@ -43,7 +43,7 @@ namespace FundooNotes.Controller
         }
 
         /// <summary>
-        /// Implemented Register API
+        /// Implemented User Register API
         /// </summary>
         /// <param name="registerModel">It is an object of the of RegisterModel class</param>
         /// <returns>This methods returns IActionResult for User Registration</returns>
@@ -72,7 +72,7 @@ namespace FundooNotes.Controller
         }
 
         /// <summary>
-        /// Implemented Login API
+        /// Implemented User Login API
         /// </summary>
         /// <param name="loginModel">It is an object of the of LoginModel class</param>
         /// <returns>This methods returns IActionResult for User Login</returns>

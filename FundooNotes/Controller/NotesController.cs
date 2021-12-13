@@ -65,7 +65,7 @@ namespace FundooNotes.Controller
         }
 
         /// <summary>
-        /// Implemented EditANote API
+        /// Implemented EditANote API to edit the Note
         /// </summary>
         /// <param name="notesModel">passing notesModel as parameter of type NotesModel</param>
         /// <returns>Returns a IAction Result</returns>
