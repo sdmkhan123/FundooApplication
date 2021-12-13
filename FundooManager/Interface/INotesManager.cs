@@ -1,9 +1,19 @@
-﻿using FundooModels;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
+﻿// *************************************************************************
+// <copyright file="INotesManager.cs" company="Magic Soft">
+//   Copyright © 2021 Company="Magic Soft"
+// </copyright>
+// <creator name="Saddam Khan"/>
+// *************************************************************************
 
 namespace FundooManager.Interface
 {
+    using FundooModels;
+    using Microsoft.AspNetCore.Http;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// INoteManager interface class
+    /// </summary>
     public interface INotesManager
     {
         string AddANote(NotesModel notesModel);

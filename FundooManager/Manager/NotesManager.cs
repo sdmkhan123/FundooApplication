@@ -1,13 +1,19 @@
-﻿using FundooManager.Interface;
-using FundooModels;
-using FundooRepository.Interface;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// *************************************************************************
+// <copyright file="NotesManager.cs" company="Magic Soft">
+//   Copyright © 2021 Company="Magic Soft"
+// </copyright>
+// <creator name="Saddam Khan"/>
+// *************************************************************************
 
 namespace FundooManager.Manager
 {
+    using FundooManager.Interface;
+    using FundooModels;
+    using FundooRepository.Interface;
+    using Microsoft.AspNetCore.Http;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
     public class NotesManager : INotesManager
     {
         private readonly INotesRepository notesRepository;
