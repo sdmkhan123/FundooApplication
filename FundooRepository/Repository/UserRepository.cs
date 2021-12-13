@@ -139,7 +139,7 @@ namespace FundooRepository.Interface
         /// </summary>
         /// <param name="resetPasswordModel">Reset Password Model resetPasswordModel</param>
         /// <returns>Returns string if the password is successfully reset or Not</returns>
-        public string ResetPassword(ResetPasswordModel resetPasswordModel)
+        public async Task<string> ResetPassword(ResetPasswordModel resetPasswordModel)
         {
             try
             {
@@ -150,7 +150,7 @@ namespace FundooRepository.Interface
                     ////Encrypting the password
                     validEmailId.Password = this.EncryptPassword(resetPasswordModel.NewPassword);
                     ////Update the data in the database
-                    this.userContext.SaveChanges();
+                    await this.userContext.SaveChangesAsync();
                     return "Password is updated";
                 }
 

@@ -10,6 +10,7 @@ namespace FundooNotes.Controller
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using FundooManager.Interface;
     using FundooModels;
     using Microsoft.AspNetCore.Mvc;
@@ -49,11 +50,11 @@ namespace FundooNotes.Controller
         /// <returns>This methods returns IActionResult for User Registration</returns>
         [HttpPost]
         [Route("api/register")]
-        public IActionResult Register([FromBody] RegisterModel registerModel)
+        public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
         {
             try
             {
-                string result = this.manager.Register(registerModel);
+                string result = await this.manager.Register(registerModel);
                 this.logger.LogInformation("New user added successfully with Firstname:" + registerModel.FirstName);
                 if (result.Equals("Registration Successful!"))
                 {
@@ -110,11 +111,11 @@ namespace FundooNotes.Controller
         /// <returns>return the IActionResult</returns>
         [HttpPut]
         [Route("api/resetpassword")]
-        public IActionResult ResetPassword([FromBody] ResetPasswordModel resetPasswordModel)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel resetPasswordModel)
         {
             try
             {
-                string result = this.manager.ResetPassword(resetPasswordModel);
+                string result = await this.manager.ResetPassword(resetPasswordModel);
                 if (result.Equals("Password is updated"))
                 {
                     return this.Ok(new ResponseModel<string>() { Status = true, Message = result });

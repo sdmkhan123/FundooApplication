@@ -10,6 +10,7 @@ namespace FundooManager.Interface
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using System.Threading.Tasks;
     using FundooModels;
     using FundooRepository.Interface;
 
@@ -37,11 +38,11 @@ namespace FundooManager.Interface
         /// </summary>
         /// <param name="registerModel">passing register model</param>
         /// <returns>Returns string if Registration is successful</returns>
-        public string Register(RegisterModel registerModel)
+        public async Task<string> Register(RegisterModel registerModel)
         {
             try
             {
-                return this.repository.Register(registerModel);
+                return await this.repository.Register(registerModel);
             }
             catch (Exception e)
             {
@@ -88,11 +89,11 @@ namespace FundooManager.Interface
         /// </summary>
         /// <param name="resetPasswordModel">Passing resetPasswordModel of type ResetPasswordModel</param>
         /// <returns>Returns string if the password is successfully reset</returns>
-        public string ResetPassword(ResetPasswordModel resetPasswordModel)
+        public async Task<string> ResetPassword(ResetPasswordModel resetPasswordModel)
         {
             try
             {
-                return this.repository.ResetPassword(resetPasswordModel);
+                return await this.repository.ResetPassword(resetPasswordModel);
             }
             catch (Exception ex)
             {

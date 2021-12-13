@@ -8,6 +8,7 @@
 namespace FundooManager.Interface
 {
     using FundooModels;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Interface IUserManager
@@ -19,7 +20,7 @@ namespace FundooManager.Interface
         /// </summary>
         /// <param name="registerModel">passing registerModel of type RegisterModel</param>
         /// <returns>return string</returns>
-        string Register(RegisterModel registerModel);
+        Task<string> Register(RegisterModel registerModel);
 
         /// <summary>
         /// Login by user
@@ -33,7 +34,7 @@ namespace FundooManager.Interface
         /// </summary>
         /// <param name="resetPasswordModel">Passing resetPasswordModel of type ResetPasswordModel</param>
         /// <returns>return string</returns>
-        string ResetPassword(ResetPasswordModel resetPasswordModel);
+        Task<string> ResetPassword(ResetPasswordModel resetPasswordModel);
 
         /// <summary>
         /// forget password
