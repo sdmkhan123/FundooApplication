@@ -10,14 +10,15 @@ namespace FundooRepository.Interface
     using FundooModels;
     using FundooRepository.Context;
     using Microsoft.Extensions.Configuration;
+    using System.Threading.Tasks;
 
     public interface IUserRepository
     {
-        string Register(RegisterModel userData);
+        Task<string> Register(RegisterModel userData);
 
         string LogIn(LoginModel login);
 
-        string ResetPassword(ResetPasswordModel userData);
+        Task<string> ResetPassword(ResetPasswordModel userData);
 
         string ForgotPassword(string emailId);
 
